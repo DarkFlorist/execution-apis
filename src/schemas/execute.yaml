@@ -1,0 +1,111 @@
+BlockStateCalls:
+  title: Array of calls to be executed at specific, optional block/state
+  properties:
+    blockOverride:
+      title: Block override
+      $ref: '#/components/schemas/BlockOverride'
+    stateOverrides:
+      title: State overrides
+      $ref: '#/components/schemas/StateOverrides'
+    calls:
+      schema:
+        type: array
+      title: List of transactions to execute at this block/state
+      $ref: '#/components/schemas/GenericTransaction'
+StateOverrides:
+  title: Accounts in state to be overridden
+  schema:
+    title: Arguments for multi call
+    type: array
+    items:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/AccountOverride'
+AccountOverride:
+  title: Details of an account to be overridden
+  type: object
+  oneOf:
+    - $ref: '#/components/schemas/AccountOverrideState'
+    - $ref: '#/components/schemas/AccountOverrideStateDiff'
+AccountOverrideState:
+  title: Account override with whole storage replacement
+  properties:
+    nonce:
+      title: Nonce
+      $ref: '#/components/schemas/uint64'
+    balance:
+      title: Balance
+      $ref: '#/components/schemas/uint256'
+    code:
+      title: Code
+      $ref: '#/components/schemas/bytes'
+    state:
+      title: Storage
+      $ref: '#/components/schemas/AccountStorage'
+AccountOverrideStateDiff:
+  title: Account override with partial storage modification
+  properties:
+    nonce:
+      title: Nonce
+      $ref: '#/components/schemas/uint64'
+    balance:
+      title: Balance
+      $ref: '#/components/schemas/uint256'
+    code:
+      title: Code
+      $ref: '#/components/schemas/bytes'
+    stateDiff:
+      title: Storage difference
+      $ref: '#/components/schemas/AccountStorage'
+AccountStorage:
+  title: Storage slots for an account
+  type: object
+  additionalProperties:
+    - $ref: '#/components/schemas/hash32'
+BlockOverride:
+  title: Context fields related to the block being executed
+  type: object
+  properties:
+    number:
+      title: Number
+      $ref: '#/components/schemas/uint256'
+    prevRandao:
+      title: Randomness beacon
+      $ref: '#/components/schemas/uint256'
+    time:
+      title: Time
+      $ref: '#/components/schemas/uint256'
+    gasLimit:
+      title: Gas limit
+      $ref: '#/components/schemas/uint64'
+    coinbase:
+      title: Coinbase
+      $ref: '#/components/schemas/address'
+    random:
+      title: Random
+      $ref: '#/components/schemas/hash32'
+    baseFee:
+      title: Base fee
+      $ref: '#/components/schemas/uint256'
+CallResults:
+  title: Results of multi call
+  type: array
+  items:
+    $ref: '#/components/schemas/CallResult'
+CallResult:
+  title: Result of multi call
+  type: object
+  required:
+    - return
+  properties:
+    return:
+      title: Return data
+      $ref: '#/components/schemas/bytes'
+    error:
+      title: Execution error
+      type: string
+    logs:
+      title: Return logs
+      type: array
+      items:
+        $ref: '#/components/schemas/Log'
