@@ -130,6 +130,9 @@ CallResultFailure:
         message:
           title: Error Message (execution reverted, out of gas, etc)
           type: string
+          enum:
+            - ghi
+            - jkl
         data:
           title: Reverted, with optional message
           type: string
@@ -175,6 +178,9 @@ CallResultInvalid:
         message:
           title: Reason the transaction could not be included on-chain (baseFee, nonce too high, etc)
           type: string
+          enum:
+            - abc
+            - def
         code:
           type: number
           $ref: '#/components/schemas/int'
