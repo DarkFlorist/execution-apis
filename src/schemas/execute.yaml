@@ -24,12 +24,12 @@ BlockStateCalls:
   description: "The size of this array may be limited depending on the client as a DOS protection. 256 is a common/recommended limit as it is the same limit used by BLOCKHASH opcode."
   type: array
   properties:
-    blockOverrides:
+    blockOverride:
       title: Block override. When overriding block number across multiple blocks, block number not decrease or remain the same between block overrides, but skipping block numbers is acceptable.
       description: |-
         Block overrides can be used to replace fields in a block.
         default: no block override.
-      $ref: '#/components/schemas/BlockOverrides'
+      $ref: '#/components/schemas/BlockOverride'
     stateOverrides:
       title: State overrides
       description: |-
@@ -110,7 +110,7 @@ AccountStorage:
     '^0x[a-fA-F0-9]{64}$':
       $ref: '#/components/schemas/hash32'
   additionalProperties: false
-BlockOverrides:
+BlockOverride:
   title: Context fields related to the block being executed
   type: object
   properties:
